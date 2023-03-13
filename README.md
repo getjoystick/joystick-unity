@@ -163,6 +163,8 @@ Note: To use the Joystick Unity package, you need to have a Joystick account and
  ![image](https://user-images.githubusercontent.com/11285378/224384474-3a6cab12-a896-4586-bf17-d5921e3e4381.png)
  ![image](https://user-images.githubusercontent.com/11285378/224384716-2132eaf0-6c0f-4c9c-a544-2ff2b7a19848.png)
  
+ The Request Content Definition is used to call Joystick's MultipleConfigs API, which includes multiple content names and IDs. The content config data is an array that contains multiple items. Extended data can be added to the request, including "Unique User ID", "Version", and an array of "Attributes". The "Attributes" array contains key-value pairs of data to be sent to the Joystick server.
+ 
  ![image](https://user-images.githubusercontent.com/11285378/224387587-b407462a-6a0b-4e66-91d4-c5bf2b22d0eb.png)
  ![image](https://user-images.githubusercontent.com/11285378/224387675-ed295da6-d92e-4c1e-8ca3-fbf96f98798b.png)
 
