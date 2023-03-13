@@ -42,15 +42,15 @@ To use the Joystick Unity package, you need to follow the below steps:
 2. Open the "Environments" tab, you can define the environments and select current enviroment type. For each environment, you can specify a name and API Key. The Envariment Type will be used to provide environment-specific configurations.
 3. After importing the package, you can access the Joystick class by using the following namespace: JoystickRemote.
 4. The Joystick class contains the following static methods:
- * > FetchConfigContent(RequestContentConfig definition, Action<bool, string> callback, bool getFreshContent = false)
- * > FetchConfigContent(List<ContentConfigData> configList, Action<bool, string> callback, ExtendedRequestData extendedRequestData = null, bool getFreshContent = false)
+ * > FetchConfigContent(RequestContentDefinition definition, Action<bool, string> callback, bool getFreshContent = false)
+ * > FetchConfigContent(List<ContentDefinitionData> configList, Action<bool, string> callback, ExtendedRequestData extendedRequestData = null, bool getFreshContent = false)
  * > FetchCatalogContent(Action<bool, string> callback, bool getFreshContent = false)
-5. To fetch content, call the FetchConfigContent method, passing in the RequestContentConfig or List of ContentConfigData and the callback method. You can also set a boolean value to force updating the content when requesting.
+5. To fetch content, call the FetchConfigContent method, passing in the RequestContentDefinition or List of ContentDefinitionData and the callback method. You can also set a boolean value to force updating the content when requesting.
 6. To fetch the catalog content, call the FetchCatalogContent method, passing in the callback method. You can also set a boolean value to force updating the content when requesting.
 
 Example Usage:
 
-Fetching Config Content using RequestContentConfig
+Fetching Config Content using RequestContentDefinition
 
 ```C#
 using JoystickRemote;
@@ -78,7 +78,7 @@ public class FetchContent : MonoBehaviour
     }
 }
 ```
-Fetching Config Content using List of ContentConfigData
+Fetching Config Content using List of ContentDefinitionData
 
 ```C#
 using JoystickRemote;
