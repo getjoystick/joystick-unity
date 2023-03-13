@@ -140,18 +140,25 @@ Note: To use the Joystick Unity package, you need to have a Joystick account and
  
  
  ## Joystick Setup Window
- ToDo
+ 
+ The Joystick Setup Window can be accessed in Unity by selecting "Joystick" from the top bar menu, followed by "Setup Window". Within the Joystick Setup Window, there are three tabs: "General", "Environments", and "Request Config".
  
  ### General
+ 
+ Under the "General" tab, you can find "Serialized Response" and "Enable Debug Mode" options. The former adds "responseType=serialized" to your request URL and returns serialized JSON data in your response data when toggled on. The latter enables Joystick's built-in logs, providing detailed information during the development process. Additionally, the "Information" window contains buttons to visit the official website and development documentation, as well as a button to check for package updates.
  
  ![image](https://user-images.githubusercontent.com/11285378/224383284-1447eaf4-7c2a-433c-b949-6551f6f288e8.png)
  
  ### Environments
  
+ In the "Environments" tab, you can create environments for your project. Each environment has a name and an API key that can be obtained from your Joystick dashboard. After entering the required information, click "Update Environments Button" to sync the environments in your project. You can then select which environment to use in your project using the drop-down list.
+ 
  ![image](https://user-images.githubusercontent.com/11285378/224384274-47e73062-5d03-47c9-954f-05fcf89dd835.png)
  ![image](https://user-images.githubusercontent.com/11285378/224384366-685010cc-9f55-44be-8769-85180f82bf00.png)
  
  ### Request Config
+ 
+ The "Request Config" tab includes the "Request Data at Start" option. When toggled on, your project will automatically fetch data at the start using the referenced Request Content Definition.
  
  ![image](https://user-images.githubusercontent.com/11285378/224384474-3a6cab12-a896-4586-bf17-d5921e3e4381.png)
  ![image](https://user-images.githubusercontent.com/11285378/224384716-2132eaf0-6c0f-4c9c-a544-2ff2b7a19848.png)
