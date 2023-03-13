@@ -1,0 +1,54 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Packages/com.getjoystick.joystick/Editor/SetupWindow/JoystickEditorSetupWindow.uss?fileID=7433441132597879392&amp;guid=f51fbe21fc8bea948a7c1494767d8882&amp;type=3#JoystickEditorSetupWindow" />
+    <Style src="project://database/Packages/com.getjoystick.joystick/Editor/TabMenu/TabbedMenu-style.uss?fileID=7433441132597879392&amp;guid=77449b0dfd9ee494d817402eb54d676d&amp;type=3#TabbedMenu-style" />
+    <ui:GroupBox style="align-items: center; min-width: 280px; background-color: rgb(233, 233, 233);">
+        <ui:VisualElement style="background-image: url(&apos;project://database/Packages/com.getjoystick.joystick/Editor/VisualAssets/Joystick_Logo_-_Primary.png?fileID=2800000&amp;guid=f64dc287c8fd61d4d9c7c17a1f90b6e8&amp;type=3#Joystick_Logo_-_Primary&apos;); height: 130px; width: 321px;" />
+    </ui:GroupBox>
+    <ui:VisualElement name="TabbedMenu-template" style="height: auto; width: auto; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;">
+        <ui:VisualElement style="height: auto; width: auto;">
+            <ui:VisualElement name="tabs" style="height: 18px; width: auto; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; -unity-text-align: upper-center; justify-content: space-between;">
+                <ui:Label name="GeneralTab" text="General" class="tab currentlySelectedTab" />
+                <ui:Label name="EnvironmentsTab" text="Environments" class="tab" />
+                <ui:Label name="RequestConfigTab" text="Request Config" class="tab" />
+            </ui:VisualElement>
+            <ui:VisualElement name="tabContent" style="height: auto; width: auto;">
+                <ui:Label name="GeneralContent" display-tooltip-when-elided="false" style="height: auto; width: auto;">
+                    <ui:GroupBox>
+                        <ui:Label text="General Setup Configuration:" display-tooltip-when-elided="true" name="LabelGeneralSetup" style="height: 21px;" />
+                        <ui:Toggle label="Serialized Response:" name="ToggleSerializedResponse" style="margin-bottom: 6px;" />
+                        <ui:Toggle label="Enable Debug Mode:" name="ToggleDebugMode" style="margin-bottom: 6px;" />
+                    </ui:GroupBox>
+                    <ui:GroupBox name="InformationView" style="height: 112px; width: auto; max-height: none; flex-direction: column;">
+                        <ui:Label text="Information:" display-tooltip-when-elided="true" name="Label" style="height: 21px;" />
+                        <ui:Button text="Website" display-tooltip-when-elided="true" name="WebsiteButton" />
+                        <ui:Button text="Documentation" display-tooltip-when-elided="true" name="DocumentationButton" />
+                        <ui:GroupBox name="VerisonView" style="flex-direction: row-reverse; align-items: center;">
+                            <ui:Label text="Verison: 0.0.0" display-tooltip-when-elided="true" name="LabelVersion" />
+                            <ui:Button text="Check For Updates" display-tooltip-when-elided="true" name="CheckForUpdatesButton" />
+                        </ui:GroupBox>
+                    </ui:GroupBox>
+                </ui:Label>
+                <ui:Label name="EnvironmentsContent" class="unselectedContent">
+                    <ui:GroupBox style="flex-direction: column; height: 414px;">
+                        <ui:Label text="Enviroments Setup Configuration:" display-tooltip-when-elided="true" name="LabelEnviromentsSetup" style="height: 21px;" />
+                        <uie:EnumField label="Environment:" value="test" name="EnvironmentType" style="margin-bottom: 6px;" />
+                        <ui:ScrollView mode="Vertical" style="height: auto; width: auto;">
+                            <ui:GroupBox name="EnvironmentSetup" />
+                        </ui:ScrollView>
+                        <ui:Button text="Update Environments Button" display-tooltip-when-elided="true" name="UpdateEnvironmentButton" style="margin-right: 3px; height: 50px; margin-top: 6px;" />
+                    </ui:GroupBox>
+                </ui:Label>
+                <ui:Label name="RequestConfigContent" class="unselectedContent">
+                    <ui:GroupBox>
+                        <ui:Label text="Auto Start RequestConfig Setup Configuration:" display-tooltip-when-elided="true" name="LabelResuestConfigSetup" style="height: 21px;" />
+                        <ui:Toggle label="Request Data at Start:" name="ToggleRequestDataAtStart" style="height: auto; margin-top: 1px; margin-bottom: 6px;" />
+                        <ui:GroupBox name="RequestContentAtStartView" style="height: 56px; width: auto;">
+                            <uie:PropertyField name="RequestContentConfig" style="height: 50px; width: auto; margin-left: 3px; margin-right: 3px; margin-top: 1px; margin-bottom: 6px;" />
+                            <ui:GroupBox name="RequestConfigView" />
+                        </ui:GroupBox>
+                    </ui:GroupBox>
+                </ui:Label>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
