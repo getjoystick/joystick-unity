@@ -4,7 +4,7 @@ using JoystickRemote.Core.Data;
 using UnityEditor;
 using UnityEngine;
 
-namespace JoystickRemote.Core
+namespace JoystickRemote
 {
     public static class JoystickEditorUtilities
     {
