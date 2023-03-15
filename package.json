@@ -4,15 +4,14 @@
   "displayName": "Joystick Unity",
   "description": "Joystick is remote configs done right, finally. \n\nJoystick empowers your team to action insights and make hot-updates instantly with remote configs and no code. Build and operate with real-time agility.\rWe put dynamic content and remote configurations at your finger-tips with modern tools to manage hot-updates, versioning, multiple environments, schema protection, webhooks, change review, and more.\n\nJoystick can be configured via the editor or through our public API\u2019s.",
   "unity": "2019.2",
-  "keywords": [
-    "keyword1",
-    "keyword2",
-    "keyword3"
-  ],
   "author": {
     "name": "Arderku",
     "email": "arderku@gmail.com",
     "url": "https://www.unity3d.com"
+  },
+    "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.0.2",
+    "com.unity.modules.unitywebrequest": "1.0.0"
   },
   "samples": [
     {

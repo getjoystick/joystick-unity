@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 public class JoystickExample : MonoBehaviour
 {
-    [SerializeField] private RequestContentConfig _config;
+    [SerializeField] private RequestContentDefinition _requestContentDefinition;
     [SerializeField] private Text _resultText;
 
     private void Start()
@@ -29,7 +29,7 @@ public class JoystickExample : MonoBehaviour
     public void OnFetchContentButtonClicked()
     {
         //Fetch the remote content and display the result in UI
-        Joystick.FetchConfigContent(_config, (isSucceed, result) =>
+        Joystick.FetchConfigContent(_requestContentDefinition, (isSucceed, result) =>
         {
             string formattedJson = FormatJson(result);
 

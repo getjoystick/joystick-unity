@@ -32,12 +32,15 @@ namespace JoystickRemote
         
         private bool _autoFetchContent;
         private bool _getFreshContent;
+        private string _runtimeEnvironmentAPIKey;
 
         [RuntimeInitializeOnLoadMethod]
         private static void Initialize()
         {
             CacheDataManager.ClearCache();
 
+            Instance._runtimeEnvironmentAPIKey = string.Empty;
+            
             var generalDefinition = JoystickUtilities.GetJoystickGeneralDefinition();
 
             if (generalDefinition != null)
@@ -63,7 +66,8 @@ namespace JoystickRemote
             
             (string url, string requestBody) = PrepareRequest(contentDefinitionDataList, extendedRequestData);
 
-            Dictionary<string, string> headers = new Dictionary<string, string> { { "x-api-key", GetCurrentEnvironmentAPIKey() } };
+            var apiKey = string.IsNullOrWhiteSpace(_runtimeEnvironmentAPIKey) ? GetCurrentEnvironmentAPIKey() : _runtimeEnvironmentAPIKey;
+            Dictionary<string, string> headers = new Dictionary<string, string> { { "x-api-key", apiKey } };
             WebRequest.PostRequestConfiguration postRequestConfiguration = new WebRequest.PostRequestConfiguration(url, headers, requestBody);
             WebRequest webRequest = new WebRequest(postRequestConfiguration);
             webRequest.OnRequestDone += response => HandleOnRequestDone(response, callback);
@@ -74,12 +78,18 @@ namespace JoystickRemote
             _getFreshContent = getFreshContent;
             
             string url = JoystickUtilities.GetCatalogAPIUrl();
-            Dictionary<string, string> headers = new Dictionary<string, string> { { "x-api-key", GetCurrentEnvironmentAPIKey() } };
+            var apiKey = string.IsNullOrWhiteSpace(_runtimeEnvironmentAPIKey) ? GetCurrentEnvironmentAPIKey() : _runtimeEnvironmentAPIKey;
+            Dictionary<string, string> headers = new Dictionary<string, string> { { "x-api-key", apiKey } };
             WebRequest.GetRequestConfiguration getRequestConfiguration = new WebRequest.GetRequestConfiguration(url, headers);
             WebRequest webRequest = new WebRequest(getRequestConfiguration);
             webRequest.OnRequestDone += response => HandleOnRequestDone(response, callback);
         }
-        
+
+        public void SetRuntimeEnvironmentAPIKey(string apiKey)
+        {
+            _runtimeEnvironmentAPIKey = apiKey;
+        }
+
         private void HandleOnRequestDone(WebRequestResponseData responseData, Action<bool, string> callback)
         {
             if (!responseData.HasError && responseData.ResponseCode == 200 && !string.IsNullOrWhiteSpace(responseData.TextData))
@@ -115,6 +125,8 @@ namespace JoystickRemote
         {
             APIRequestData requestData;
 
+            extendedRequestData ??= new ExtendedRequestData();
+            
             if (Regex.IsMatch(extendedRequestData.version, @"\d+\.\d+\.\d+"))
             {
                 requestData = new APIRequestVersionData
@@ -141,7 +153,13 @@ namespace JoystickRemote
 
         private string GetCurrentEnvironmentAPIKey()
         {
-            EnvironmentsDataDefinition environmentsDataDefinition = JoystickUtilities.GetEnvironmentDefinition();
+            EnvironmentsDataDefinition environmentsDataDefinition = JoystickUtilities.GetEnvironmentsDataDefinition();
+
+            if (environmentsDataDefinition == null)
+            {
+                throw new NullReferenceException("Please set environments data definition first! You can create it by opening Setup Window through Joystick menu.");
+            }
+
             int index = (int)environmentsDataDefinition.environmentType;
 
             string name = environmentsDataDefinition.environments[index].Name;

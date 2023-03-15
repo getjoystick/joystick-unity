@@ -1,12 +1,12 @@
-﻿using JoystickRemote.Core.Data;
+﻿using System;
 
 namespace JoystickRemote
 {
-    [System.Serializable]
+    [Serializable]
     public class ExtendedRequestData
     {
-        public string uniqueUserId;
-        public string version;
-        public AttributesData[] attributes;
+        public string uniqueUserId = string.Empty;
+        public string version = string.Empty;
+        public AttributesData[] attributes = Array.Empty<AttributesData>();
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace JoystickRemote.Core.Data
+﻿using System;
+
+namespace JoystickRemote
 {
-    [System.Serializable]
+    [Serializable]
     public class AttributesData 
     {
         public string key;

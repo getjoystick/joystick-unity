@@ -87,7 +87,7 @@ namespace JoystickRemote
 
             updateEnvironmentButton.clickable.clicked += () =>
             {
-                environmentsConfigDefinition.UpdateEnvironment();
+                JoystickEditorUtilities.UpdateEnvironment(environmentsConfigDefinition.environments);
                 EditorUtility.SetDirty(environmentsConfigDefinition);
             };
 
@@ -209,7 +209,7 @@ namespace JoystickRemote
                 var configDirectoryPath = TryCreateJoystickDefinitionsResourcesFolder();
 
                 AssetDatabase.CreateAsset(environmentsConfigDefinition,
-                    $"{configDirectoryPath}/EnvironmentsDefinition.asset");
+                    $"{configDirectoryPath}/EnvironmentsDataDefinition.asset");
                 return environmentsConfigDefinition;
             }
 

@@ -1,14 +1,14 @@
 {
     "name": "Unity.Joystick.Editor",
-    "rootNamespace": "JoystickRemote",
+    "rootNamespace": "",
     "references": [
-        "Unity.Joystick"
+        "GUID:e1dfaeee439b69f46a9fb304538605dc"
     ],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,

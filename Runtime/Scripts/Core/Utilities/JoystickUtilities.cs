@@ -1,33 +1,20 @@
 using System.Collections.Generic;
 using System.Text;
 using JoystickRemote.Core.Data;
-using UnityEditor;
 using UnityEngine;
 
 namespace JoystickRemote.Core
 {
     public static class JoystickUtilities
     {
-        public static EnvironmentsDataDefinition GetEnvironmentDefinition()
+        public static EnvironmentsDataDefinition GetEnvironmentsDataDefinition()
         {
-            return Resources.Load<EnvironmentsDataDefinition>("EnvironmentsDefinition");
+            return Resources.Load<EnvironmentsDataDefinition>("EnvironmentsDataDefinition");
         }
 
         public static JoystickGeneralDefinition GetJoystickGeneralDefinition()
         {
             return Resources.Load<JoystickGeneralDefinition>("JoystickGeneralDefinition");
-        }
-
-        public static string GetJoyConfigFolderSavePath()
-        {
-            var folderGUIDs = AssetDatabase.FindAssets($"t:Folder JoyConfigs");
-
-            if (folderGUIDs.Length == 0)
-            {
-                JoystickLogger.LogError($"Could not find folder with name 'JoyConfigs'");
-            }
-
-            return AssetDatabase.GUIDToAssetPath(folderGUIDs[0]);
         }
 
         public static string GetConfigContentAPIUrl(List<ContentDefinitionData> configDataList)

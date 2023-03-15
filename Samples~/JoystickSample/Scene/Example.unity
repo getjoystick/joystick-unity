@@ -226,8 +226,8 @@ GameObject:
   - component: {fileID: 96809531}
   - component: {fileID: 96809530}
   - component: {fileID: 96809529}
-  - component: {fileID: 96809533}
   - component: {fileID: 96809534}
+  - component: {fileID: 96809535}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -318,20 +318,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &96809533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 96809528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8d023cda74c569478782f33b676da0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _config: {fileID: 11400000, guid: 33e0d24fe99e8984f9298e0d7dde3669, type: 2}
-  _resultText: {fileID: 1409683533}
 --- !u!114 &96809534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,6 +344,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
+--- !u!114 &96809535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96809528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a863d9ce1efd745fda131ef31c61b470, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _requestContentDefinition: {fileID: 11400000, guid: 8621d648835f145f8ae9394140003325, type: 2}
+  _resultText: {fileID: 1409683533}
 --- !u!1 &222360600
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,7 +588,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dda8d3fbfa1dd4cdeb9b196d9198c9f5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 18d04ed45ae1149a88038caf82734daa, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -690,7 +690,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 96809533}
+      - m_Target: {fileID: 96809535}
         m_TargetAssemblyTypeName: JoystickExample, Assembly-CSharp
         m_MethodName: OnFetchContentButtonClicked
         m_Mode: 1
@@ -722,7 +722,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bd03d34f5a4c0411797b916c92438fa2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 60af8ffb01773490ba83563ae3cd7c00, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -824,7 +824,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 96809533}
+      - m_Target: {fileID: 96809535}
         m_TargetAssemblyTypeName: JoystickExample, Assembly-CSharp
         m_MethodName: OnFetchCatalogButtonClicked
         m_Mode: 1
@@ -856,7 +856,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bd03d34f5a4c0411797b916c92438fa2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 60af8ffb01773490ba83563ae3cd7c00, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

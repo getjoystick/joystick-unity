@@ -53,5 +53,14 @@ namespace JoystickRemote
         {
             JoystickService.Instance.FetchCatalogContent(callback, getFreshContent);
         }
+
+        /// <summary>
+        /// Set up a runtime apikey for Joystick
+        /// </summary>
+        /// <param name="apiKey">A string value of api key</param>
+        public static void SetRuntimeEnvironmentAPIKey(string apiKey)
+        {
+            JoystickService.Instance.SetRuntimeEnvironmentAPIKey(apiKey);
+        }
     }
 }

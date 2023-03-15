@@ -1,10 +1,10 @@
 {
     "name": "Unity.Joystick",
-    "rootNamespace": "JoystickRemote",
+    "rootNamespace": "",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
