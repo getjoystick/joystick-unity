@@ -45,6 +45,7 @@ To use the Joystick Unity package, you need to follow the below steps:
  * > FetchConfigContent(RequestContentDefinition definition, Action<bool, string> callback, bool getFreshContent = false)
  * > FetchConfigContent(List<ContentDefinitionData> configList, Action<bool, string> callback, ExtendedRequestData extendedRequestData = null, bool getFreshContent = false)
  * > FetchCatalogContent(Action<bool, string> callback, bool getFreshContent = false)
+ * > SetRuntimeEnvironmentAPIKey(string apiKey)
 5. To fetch content, call the FetchConfigContent method, passing in the RequestContentDefinition or List of ContentDefinitionData and the callback method. You can also set a boolean value to force updating the content when requesting.
 6. To fetch the catalog content, call the FetchCatalogContent method, passing in the callback method. You can also set a boolean value to force updating the content when requesting.
 
@@ -132,6 +133,19 @@ public class FetchContent : MonoBehaviour
 }
 ```
  
+Set Runtime Environment API Key
+```C#
+using JoystickRemote;
+using UnityEngine;
+
+public class SetRuntimeEnvironmentAPIKey : MonoBehaviour
+{
+    private void Start()
+    {
+        Joystick.SetRuntimeEnvironmentAPIKey("{You API Key}");
+    }
+}
+```
 
 Note: To use the Joystick Unity package, you need to have a Joystick account and have configured the remote content on the Joystick server. Also, make sure to check the "Request Data at Start" option in the Joystick editor window to trigger the OnAutoStartFetchContentCompleted event when the data fetching is complete.
  
