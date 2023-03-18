@@ -150,7 +150,21 @@ public class SetRuntimeEnvironmentAPIKey : MonoBehaviour
 Note: To use the Joystick Unity package, you need to have a Joystick account and have configured the remote content on the Joystick server. Also, make sure to check the "Request Data at Start" option in the Joystick editor window to trigger the OnAutoStartFetchContentCompleted event when the data fetching is complete.
  
  ## Caching Mechanism
- ToDo
+ 
+ Caching config data is a technique used to improve the performance of an application by reducing the number of requests made to a server to retrieve data that doesn't change frequently. By caching the data, subsequent requests for the same data can be served directly from the cache, which can significantly reduce the load on the server and improve the responsiveness of the application.
+ 
+ 
+```C#
+FetchConfigContent(RequestContentDefinition definition, Action<bool, string> callback, bool getFreshContent = false)
+ ```
+```C#
+FetchConfigContent(List<ContentDefinitionData> configList, Action<bool, string> callback, ExtendedRequestData extendedRequestData = null, bool getFreshContent = false)
+ ```
+```C#
+FetchCatalogContent(Action<bool, string> callback, bool getFreshContent = false)
+ ```
+ 
+All three FetchConfigContent methods are used to retrieve configuration data from a server. By default, the methods will attempt to retrieve the data from a cache if it exists, but you can set the getFreshContent parameter to true to force the methods to fetch the data from the server.
  
  
  ## Joystick Setup Window
