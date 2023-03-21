@@ -314,8 +314,9 @@ All three FetchConfigContent methods are used to retrieve configuration data fro
  
  The Request Content Definition is used to call Joystick's MultipleConfigs API, which includes multiple content IDs. The contentIds is an array that contains multiple string items. Extended data can be added to the request, including "Unique User ID", "Version", and an array of "Attributes". The "Attributes" array contains key-value pairs of data to be sent to the Joystick server.
  
- ![image](https://user-images.githubusercontent.com/36725128/226673145-5e0bea79-ef7a-40ae-ba44-a2c28eff7635.png)
- ![image](https://user-images.githubusercontent.com/11285378/224387675-ed295da6-d92e-4c1e-8ca3-fbf96f98798b.png)
+![image](https://user-images.githubusercontent.com/36725128/226674474-7b03c487-7bb1-40df-8478-387e25ac51f7.png)
+![image](https://user-images.githubusercontent.com/36725128/226674575-b20376bc-1e61-41d4-b179-bb26bf182a37.png)
+
 
 
 
