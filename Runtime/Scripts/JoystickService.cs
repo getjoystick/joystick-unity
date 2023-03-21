@@ -29,7 +29,7 @@ namespace JoystickRemoteConfig
 
         public Action<bool, string> OnAutoStartFetchContentCompleted;
         public string ResponseJsonData { get; private set; }
-        public ExtendedRequestData GlobalExtendedRequestData { get; set; }
+        public ExtendedRequestData GlobalExtendedRequestData { get; private set; }
         
         private bool _autoFetchContent;
         private bool _getFreshContent;
