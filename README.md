@@ -44,7 +44,7 @@ To use the Joystick Unity package, you need to follow the below steps:
 4. The Joystick class contains the following static methods:
  * > FetchConfigContent(RequestContentDefinition definition, Action<bool, string> callback, bool getFreshContent = false)
  * > FetchConfigContent(List<ContentDefinitionData> configList, Action<bool, string> callback, ExtendedRequestData extendedRequestData = null, bool getFreshContent = false)
- * > FetchCatalogContent(Action<bool, string> callback, bool getFreshContent = false)
+ * > FetchCatalogContent(Action<bool, string> callback)
  * > SetRuntimeEnvironmentAPIKey(string apiKey)
 5. To fetch content, call the FetchConfigContent method, passing in the RequestContentDefinition or List of ContentDefinitionData and the callback method. You can also set a boolean value to force updating the content when requesting.
 6. To fetch the catalog content, call the FetchCatalogContent method, passing in the callback method. You can also set a boolean value to force updating the content when requesting.
@@ -298,17 +298,25 @@ All three FetchConfigContent methods are used to retrieve configuration data fro
  ![image](https://user-images.githubusercontent.com/11285378/224384274-47e73062-5d03-47c9-954f-05fcf89dd835.png)
  ![image](https://user-images.githubusercontent.com/11285378/224384366-685010cc-9f55-44be-8769-85180f82bf00.png)
  
- ### Request Config
+ ### Request Settings
+ 
+  ## GlobalExtendedRequestData
+ 
+ ![image](https://user-images.githubusercontent.com/11285378/226671323-cb2f9587-ebb2-4728-b453-e60b8752cbc7.png)
+
+ 
+  ## Request Data At Application Start
  
  The "Request Config" tab includes the "Request Data at Start" option. When toggled on, your project will automatically fetch data at the start using the referenced Request Content Definition.
  
  ![image](https://user-images.githubusercontent.com/11285378/224384474-3a6cab12-a896-4586-bf17-d5921e3e4381.png)
  ![image](https://user-images.githubusercontent.com/11285378/224384716-2132eaf0-6c0f-4c9c-a544-2ff2b7a19848.png)
  
- The Request Content Definition is used to call Joystick's MultipleConfigs API, which includes multiple content names and IDs. The content config data is an array that contains multiple items. Extended data can be added to the request, including "Unique User ID", "Version", and an array of "Attributes". The "Attributes" array contains key-value pairs of data to be sent to the Joystick server.
+ The Request Content Definition is used to call Joystick's MultipleConfigs API, which includes multiple content IDs. The contentIds is an array that contains multiple string items. Extended data can be added to the request, including "Unique User ID", "Version", and an array of "Attributes". The "Attributes" array contains key-value pairs of data to be sent to the Joystick server.
  
- ![image](https://user-images.githubusercontent.com/11285378/224387587-b407462a-6a0b-4e66-91d4-c5bf2b22d0eb.png)
- ![image](https://user-images.githubusercontent.com/11285378/224387675-ed295da6-d92e-4c1e-8ca3-fbf96f98798b.png)
+![image](https://user-images.githubusercontent.com/36725128/226674474-7b03c487-7bb1-40df-8478-387e25ac51f7.png)
+![image](https://user-images.githubusercontent.com/36725128/226674575-b20376bc-1e61-41d4-b179-bb26bf182a37.png)
+
 
 
 
