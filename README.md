@@ -146,6 +146,33 @@ public class SetRuntimeEnvironmentAPIKey : MonoBehaviour
     }
 }
 ```
+ 
+Set GloalExtendedRequestData in runtime
+```C#
+using JoystickRemoteConfig;
+using UnityEngine;
+
+public class SetGloalExtendedRequestDataInRuntime : MonoBehaviour
+{
+    private void Start()
+    {
+        Joystick.GlobalExtendedRequestData = new ExtendedRequestData
+        {
+            uniqueUserId = "{You uniqueUserId}",
+            version = "{You version}",
+            attributes = new AttributesData[1]
+        };
+        
+        Joystick.GlobalExtendedRequestData.attributes[0] = new AttributesData
+        {
+            key = "{You key}",
+            value = "{You value}"
+        };
+    }
+}
+```
+ 
+ 
 ## Use Examples
  
 Here is an example of how to deserialize JSON data that includes hyphens.
