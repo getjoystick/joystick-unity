@@ -156,18 +156,21 @@ public class SetGloalExtendedRequestDataInRuntime : MonoBehaviour
 {
     private void Start()
     {
-        Joystick.GlobalExtendedRequestData = new ExtendedRequestData
+        Joystick.GlobalExtendedRequestData.SetUniqueUserId("{You Unique UserId}");
+        Joystick.GlobalExtendedRequestData.SetVersion("{Your Version}");
+        Joystick.GlobalExtendedRequestData.SetAttributes(new AttributesData[]
         {
-            uniqueUserId = "{You uniqueUserId}",
-            version = "{You version}",
-            attributes = new AttributesData[1]
-        };
-        
-        Joystick.GlobalExtendedRequestData.attributes[0] = new AttributesData
-        {
-            key = "{You key}",
-            value = "{You value}"
-        };
+            new()
+            {
+                key = "{Your Key}",
+                value = "{Your Value}"
+            },
+            new()
+            {
+                key = "{Your Key}",
+                value = "{Your Value}"
+            }
+        });
     }
 }
 ```
