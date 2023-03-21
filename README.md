@@ -147,7 +147,7 @@ public class SetRuntimeEnvironmentAPIKey : MonoBehaviour
 }
 ```
  
-Example of deserialize Json Data which contains hyphen
+Here is an example of how to deserialize JSON data that includes hyphens.
 ```C#
 using System.Collections.Generic;
 using JoystickRemoteConfig;
@@ -222,6 +222,14 @@ public class JoystickExample02 : MonoBehaviour
             }
         });
     }
+}
+ 
+ 
+The following demonstrates how the remote configuration data is arranged on the Joystick dashboard.
+ 
+![image](https://user-images.githubusercontent.com/36725128/226647608-e35de86c-5975-470f-b232-5668ecfed0f2.png)
+![image](https://user-images.githubusercontent.com/36725128/226647759-ec728360-4bde-4d5c-8978-674aed1de433.png)
+![image](https://user-images.githubusercontent.com/36725128/226647933-70402571-6051-4769-9f63-343876e1c42c.png)
 
  
 ```
