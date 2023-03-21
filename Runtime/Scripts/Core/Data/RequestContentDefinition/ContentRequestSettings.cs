@@ -3,7 +3,7 @@ using System;
 namespace JoystickRemote
 {
     [Serializable]
-    public class ContentDefinitionData
+    public class ContentRequestSettings
     {
         public string contentName;
         public string contentId;

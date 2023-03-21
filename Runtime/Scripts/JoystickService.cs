@@ -29,6 +29,7 @@ namespace JoystickRemote
 
         public Action<bool, string> OnAutoStartFetchContentCompleted;
         public string ResponseJsonData { get; private set; }
+        public ExtendedRequestData GlobalExtendedRequestData { get; private set; }
         
         private bool _autoFetchContent;
         private bool _getFreshContent;
@@ -41,6 +42,8 @@ namespace JoystickRemote
 
             Instance._runtimeEnvironmentAPIKey = string.Empty;
             
+            //TODO Set GlobalExtendedRequestData
+            
             var generalDefinition = JoystickUtilities.GetJoystickGeneralDefinition();
 
             if (generalDefinition != null)
@@ -50,7 +53,7 @@ namespace JoystickRemote
 
             if (Instance._autoFetchContent)
             {
-                List<ContentDefinitionData> contentDefinitionDataList = generalDefinition.RequestContentDefinitionAtStart.DefinitionData;
+                List<ContentRequestSettings> contentDefinitionDataList = generalDefinition.RequestContentDefinitionAtStart.DefinitionData;
                 ExtendedRequestData extendedRequestData = generalDefinition.RequestContentDefinitionAtStart.RequestData;
                 Instance.FetchConfigContent(contentDefinitionDataList,
                     (isSucceed, responseJsonData) =>
@@ -60,11 +63,13 @@ namespace JoystickRemote
             }
         }
 
-        public void FetchConfigContent(List<ContentDefinitionData> contentDefinitionDataList, Action<bool, string> callback, ExtendedRequestData extendedRequestData = null, bool getFreshContent = false)
+        public void FetchConfigContent(List<ContentRequestSettings> contentDefinitionDataList, Action<bool, string> callback, ExtendedRequestData overrideExtendedRequestData = null, bool getFreshContent = false)
         {
             _getFreshContent = getFreshContent;
+
+            GlobalExtendedRequestData = overrideExtendedRequestData;
             
-            (string url, string requestBody) = PrepareRequest(contentDefinitionDataList, extendedRequestData);
+            (string url, string requestBody) = PrepareRequest(contentDefinitionDataList, GlobalExtendedRequestData);
 
             var apiKey = string.IsNullOrWhiteSpace(_runtimeEnvironmentAPIKey) ? GetCurrentEnvironmentAPIKey() : _runtimeEnvironmentAPIKey;
             Dictionary<string, string> headers = new Dictionary<string, string> { { "x-api-key", apiKey } };
@@ -73,9 +78,9 @@ namespace JoystickRemote
             webRequest.OnRequestDone += response => HandleOnRequestDone(response, callback);
         }
        
-        public void FetchCatalogContent(Action<bool, string> callback, bool getFreshContent = false)
+        public void FetchCatalogContent(Action<bool, string> callback)
         {
-            _getFreshContent = getFreshContent;
+            _getFreshContent = true;
             
             string url = JoystickUtilities.GetCatalogAPIUrl();
             var apiKey = string.IsNullOrWhiteSpace(_runtimeEnvironmentAPIKey) ? GetCurrentEnvironmentAPIKey() : _runtimeEnvironmentAPIKey;
@@ -121,7 +126,7 @@ namespace JoystickRemote
             }
         }
 
-        private (string, string) PrepareRequest(List<ContentDefinitionData> contentDefinitionDataList, ExtendedRequestData extendedRequestData)
+        private (string, string) PrepareRequest(List<ContentRequestSettings> contentDefinitionDataList, ExtendedRequestData extendedRequestData)
         {
             APIRequestData requestData;
 
