@@ -42,7 +42,7 @@ namespace JoystickRemoteConfig
 
             Instance._runtimeEnvironmentAPIKey = string.Empty;
             
-            //TODO Set GlobalExtendedRequestData
+            Instance.GlobalExtendedRequestData = JoystickUtilities.GlobalExtendedRequestDefinition().GlobalExtendedRequestData;
             
             var generalDefinition = JoystickUtilities.GetJoystickGeneralDefinition();
 

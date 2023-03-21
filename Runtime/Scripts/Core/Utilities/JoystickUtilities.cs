@@ -16,6 +16,11 @@ namespace JoystickRemoteConfig.Core
             return Resources.Load<JoystickGeneralDefinition>("JoystickGeneralDefinition");
         }
 
+        public static GlobalExtendedRequestDefinition GlobalExtendedRequestDefinition()
+        {
+            return Resources.Load<GlobalExtendedRequestDefinition>("GlobalExtendedRequestDefinition");
+        }
+
         public static string GetConfigContentAPIUrl(string[] contentIds)
         {
             StringBuilder stringBuilder = new StringBuilder();
