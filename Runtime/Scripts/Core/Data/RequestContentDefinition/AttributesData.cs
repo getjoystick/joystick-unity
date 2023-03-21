@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JoystickRemote
+namespace JoystickRemoteConfig
 {
     [Serializable]
     public class AttributesData 

@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace JoystickRemote.Core.Web
+namespace JoystickRemoteConfig.Core.Web
 {
     [PublicAPI]
     public class WebRequestInternal

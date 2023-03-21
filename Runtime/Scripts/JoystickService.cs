@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using JoystickRemote.Core;
-using JoystickRemote.Core.API;
-using JoystickRemote.Core.Data;
-using JoystickRemote.Core.Web;
+using JoystickRemoteConfig.Core;
+using JoystickRemoteConfig.Core.API;
+using JoystickRemoteConfig.Core.Data;
+using JoystickRemoteConfig.Core.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace JoystickRemote
+namespace JoystickRemoteConfig
 {
     public sealed class JoystickService
     {
@@ -29,6 +29,7 @@ namespace JoystickRemote
 
         public Action<bool, string> OnAutoStartFetchContentCompleted;
         public string ResponseJsonData { get; private set; }
+        public ExtendedRequestData GlobalExtendedRequestData { get; private set; }
         
         private bool _autoFetchContent;
         private bool _getFreshContent;
@@ -41,6 +42,8 @@ namespace JoystickRemote
 
             Instance._runtimeEnvironmentAPIKey = string.Empty;
             
+            Instance.GlobalExtendedRequestData = JoystickUtilities.GlobalExtendedRequestDefinition().GlobalExtendedRequestData;
+            
             var generalDefinition = JoystickUtilities.GetJoystickGeneralDefinition();
 
             if (generalDefinition != null)
@@ -50,9 +53,9 @@ namespace JoystickRemote
 
             if (Instance._autoFetchContent)
             {
-                List<ContentDefinitionData> contentDefinitionDataList = generalDefinition.RequestContentDefinitionAtStart.DefinitionData;
+                string[] contentIds = generalDefinition.RequestContentDefinitionAtStart.ContentIds;
                 ExtendedRequestData extendedRequestData = generalDefinition.RequestContentDefinitionAtStart.RequestData;
-                Instance.FetchConfigContent(contentDefinitionDataList,
+                Instance.FetchConfigContent(contentIds,
                     (isSucceed, responseJsonData) =>
                     {
                         Instance.OnAutoStartFetchContentCompleted?.Invoke(isSucceed, responseJsonData);
@@ -60,11 +63,13 @@ namespace JoystickRemote
             }
         }
 
-        public void FetchConfigContent(List<ContentDefinitionData> contentDefinitionDataList, Action<bool, string> callback, ExtendedRequestData extendedRequestData = null, bool getFreshContent = false)
+        public void FetchConfigContent(string[] contentIds, Action<bool, string> callback, ExtendedRequestData overrideExtendedRequestData = null, bool getFreshContent = false)
         {
             _getFreshContent = getFreshContent;
+
+            GlobalExtendedRequestData = overrideExtendedRequestData;
             
-            (string url, string requestBody) = PrepareRequest(contentDefinitionDataList, extendedRequestData);
+            (string url, string requestBody) = PrepareRequest(contentIds, GlobalExtendedRequestData);
 
             var apiKey = string.IsNullOrWhiteSpace(_runtimeEnvironmentAPIKey) ? GetCurrentEnvironmentAPIKey() : _runtimeEnvironmentAPIKey;
             Dictionary<string, string> headers = new Dictionary<string, string> { { "x-api-key", apiKey } };
@@ -73,9 +78,9 @@ namespace JoystickRemote
             webRequest.OnRequestDone += response => HandleOnRequestDone(response, callback);
         }
        
-        public void FetchCatalogContent(Action<bool, string> callback, bool getFreshContent = false)
+        public void FetchCatalogContent(Action<bool, string> callback)
         {
-            _getFreshContent = getFreshContent;
+            _getFreshContent = true;
             
             string url = JoystickUtilities.GetCatalogAPIUrl();
             var apiKey = string.IsNullOrWhiteSpace(_runtimeEnvironmentAPIKey) ? GetCurrentEnvironmentAPIKey() : _runtimeEnvironmentAPIKey;
@@ -121,7 +126,7 @@ namespace JoystickRemote
             }
         }
 
-        private (string, string) PrepareRequest(List<ContentDefinitionData> contentDefinitionDataList, ExtendedRequestData extendedRequestData)
+        private (string, string) PrepareRequest(string[] contentIds, ExtendedRequestData extendedRequestData)
         {
             APIRequestData requestData;
 
@@ -145,7 +150,7 @@ namespace JoystickRemote
             
             requestData.p = GetAttributesJObject(extendedRequestData.attributes);
 
-            var url = JoystickUtilities.GetConfigContentAPIUrl(contentDefinitionDataList);
+            var url = JoystickUtilities.GetConfigContentAPIUrl(contentIds);
             var requestBody = JsonConvert.SerializeObject(requestData);
             
             return (url, requestBody);

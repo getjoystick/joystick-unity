@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using System.Text;
-using JoystickRemote.Core.Data;
+using JoystickRemoteConfig.Core.Data;
 using UnityEngine;
 
-namespace JoystickRemote.Core
+namespace JoystickRemoteConfig.Core
 {
     public static class JoystickUtilities
     {
@@ -17,17 +16,22 @@ namespace JoystickRemote.Core
             return Resources.Load<JoystickGeneralDefinition>("JoystickGeneralDefinition");
         }
 
-        public static string GetConfigContentAPIUrl(List<ContentDefinitionData> configDataList)
+        public static GlobalExtendedRequestDefinition GlobalExtendedRequestDefinition()
+        {
+            return Resources.Load<GlobalExtendedRequestDefinition>("GlobalExtendedRequestDefinition");
+        }
+
+        public static string GetConfigContentAPIUrl(string[] contentIds)
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            for (int i = 0; i < configDataList.Count; i++)
+            for (int i = 0; i < contentIds.Length; i++)
             {
                 stringBuilder.Append("\"");
-                stringBuilder.Append(configDataList[i].contentId);
+                stringBuilder.Append(contentIds[i]);
                 stringBuilder.Append("\"");
 
-                if (i < configDataList.Count - 1)
+                if (i < contentIds.Length - 1)
                 {
                     stringBuilder.Append(",");
                 }

@@ -1,12 +1,12 @@
 using System.IO;
-using JoystickRemote.Core;
-using JoystickRemote.Core.Data;
+using JoystickRemoteConfig.Core;
+using JoystickRemoteConfig.Core.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 
-namespace JoystickRemote
+namespace JoystickRemoteConfig.Editor
 {
     public class JoystickEditorSetupWindow : EditorWindow
     {
@@ -99,6 +99,9 @@ namespace JoystickRemote
             var requestDataAtStartField = rootVisualElement.Q<Toggle>("ToggleRequestDataAtStart");
             var requestContentAtStartView = rootVisualElement.Q<GroupBox>("RequestContentAtStartView");
 
+            var globalExtendedRequestData = GetGlobalExtendedRequestDefinition();
+            RequestContentGlobalExtendedRequestData(globalExtendedRequestData);
+            
             requestContentAtStartView.visible = _joystickGeneralDefinition.IsRequestContentAtStartEnabled;
 
             requestDataAtStartField.value = _joystickGeneralDefinition.IsRequestContentAtStartEnabled;
@@ -129,13 +132,13 @@ namespace JoystickRemote
             propertyField.Add(targetObjectField);
             //RequestContentConfigInfo(targetObjectField.value);
         }
-        
-        private void RequestContentConfigInfo(Object targetObjectField)
+
+        private void RequestContentGlobalExtendedRequestData(Object targetObjectField)
         {
-            var requestConfigView = rootVisualElement.Q<GroupBox>("RequestConfigView");
+            var extendedRequestConfigView = rootVisualElement.Q<GroupBox>("GlobalExtendedRequestDataView");
             if (targetObjectField == null)
             {
-                requestConfigView.Clear();
+                extendedRequestConfigView.Clear();
             }
             else
             {
@@ -143,9 +146,9 @@ namespace JoystickRemote
                 var serializedProperty = serializedObject.GetIterator();
                 serializedProperty.Next(true);
 
-                while (serializedProperty.NextVisible(true))
+                while (serializedProperty.NextVisible(false))
                 {
-                    if (serializedProperty.name is "m_Script" or "RequestContentDefinition")
+                    if (serializedProperty.name is "m_Script" or "GlobalExtendedRequestDefinition")
                         continue;
 
                     var requestConfigPropertyField = new PropertyField(serializedProperty)
@@ -158,12 +161,12 @@ namespace JoystickRemote
 
                     requestConfigPropertyField.Bind(serializedObject);
 
-                    requestConfigView.Add(requestConfigPropertyField);
+                    extendedRequestConfigView.Add(requestConfigPropertyField);
                 }
             }
         }
 
-            private void SetupGenericConfigView()
+        private void SetupGenericConfigView()
         {
             var toggleSerializedResponseField = rootVisualElement.Q<Toggle>("ToggleSerializedResponse");
 
@@ -197,6 +200,24 @@ namespace JoystickRemote
             
             var labelVersion = rootVisualElement.Q<Label>("LabelVersion");
             labelVersion.text = "Version: " + JoystickEditorUtilities.GetPackageVersion();
+        }
+        
+        private GlobalExtendedRequestDefinition GetGlobalExtendedRequestDefinition()
+        {
+            var guids = AssetDatabase.FindAssets("t:GlobalExtendedRequestDefinition");
+
+            if (guids.Length <= 0)
+            {
+                var globalExtendedRequestDefinition = CreateInstance<GlobalExtendedRequestDefinition>();
+                var configDirectoryPath = TryCreateJoystickDefinitionsResourcesFolder();
+
+                AssetDatabase.CreateAsset(globalExtendedRequestDefinition,
+                    $"{configDirectoryPath}/GlobalExtendedRequestDefinition.asset");
+                return globalExtendedRequestDefinition;
+            }
+
+            var path = AssetDatabase.GUIDToAssetPath(guids[0]);
+            return AssetDatabase.LoadAssetAtPath<GlobalExtendedRequestDefinition>(path);
         }
 
         private EnvironmentsDataDefinition GetEnvironmentDefinition()

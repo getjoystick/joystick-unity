@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace JoystickRemote.Core.Data
+namespace JoystickRemoteConfig.Core.Data
 {
     [Serializable]
     public class EnvironmentData
