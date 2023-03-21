@@ -46,7 +46,7 @@ To use the Joystick Unity package, you need to follow the below steps:
  * > FetchConfigContent(string[] contentIds, Action<bool, string> callback, ExtendedRequestData overrideExtendedRequestData = null, bool getFreshContent = false)
  * > FetchCatalogContent(Action<bool, string> callback)
  * > SetRuntimeEnvironmentAPIKey(string apiKey)
-5. To fetch content, call the FetchConfigContent method, passing in the RequestContentDefinition or List of ContentDefinitionData and the callback method. You can also set a boolean value to force updating the content when requesting.
+5. To fetch content, call the FetchConfigContent method, passing in the RequestContentDefinition or a string array of contentIds and the callback method. You can also set a boolean value to force updating the content when requesting.
 6. To fetch the catalog content, call the FetchCatalogContent method, passing in the callback method. You can also set a boolean value to force updating the content when requesting.
 
 Example Usage:
