@@ -44,7 +44,7 @@ To use the Joystick Unity package, you need to follow the below steps:
 4. The Joystick class contains the following static methods:
  * > FetchConfigContent(RequestContentDefinition definition, Action<bool, string> callback, bool getFreshContent = false)
  * > FetchConfigContent(List<ContentDefinitionData> configList, Action<bool, string> callback, ExtendedRequestData extendedRequestData = null, bool getFreshContent = false)
- * > FetchCatalogContent(Action<bool, string> callback, bool getFreshContent = false)
+ * > FetchCatalogContent(Action<bool, string> callback)
  * > SetRuntimeEnvironmentAPIKey(string apiKey)
 5. To fetch content, call the FetchConfigContent method, passing in the RequestContentDefinition or List of ContentDefinitionData and the callback method. You can also set a boolean value to force updating the content when requesting.
 6. To fetch the catalog content, call the FetchCatalogContent method, passing in the callback method. You can also set a boolean value to force updating the content when requesting.
@@ -298,7 +298,14 @@ All three FetchConfigContent methods are used to retrieve configuration data fro
  ![image](https://user-images.githubusercontent.com/11285378/224384274-47e73062-5d03-47c9-954f-05fcf89dd835.png)
  ![image](https://user-images.githubusercontent.com/11285378/224384366-685010cc-9f55-44be-8769-85180f82bf00.png)
  
- ### Request Config
+ ### Request Settings
+ 
+  ## GlobalExtendedRequestData
+ 
+ ![image](https://user-images.githubusercontent.com/11285378/226671323-cb2f9587-ebb2-4728-b453-e60b8752cbc7.png)
+
+ 
+  ## Request Data At Application Start
  
  The "Request Config" tab includes the "Request Data at Start" option. When toggled on, your project will automatically fetch data at the start using the referenced Request Content Definition.
  
