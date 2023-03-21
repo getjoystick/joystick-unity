@@ -79,7 +79,7 @@ public class FetchContent : MonoBehaviour
     }
 }
 ```
-Fetching Config Content using List of ContentDefinitionData
+Fetching Config Content using an string array of contentIds
 
 ```C#
 using JoystickRemoteConfig;
@@ -87,10 +87,10 @@ using UnityEngine;
 
 public class FetchContent : MonoBehaviour
 {
-    public List<ContentConfigData> configList;
+    public string[] contentIds;
     private void Start()
     {
-        Joystick.FetchConfigContent(configList, OnContentFetchComplete);
+        Joystick.FetchConfigContent(contentIds, OnContentFetchComplete);
     }
 
     private void OnContentFetchComplete(bool success, string response)
