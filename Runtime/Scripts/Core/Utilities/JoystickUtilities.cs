@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using System.Text;
-using JoystickRemote.Core.Data;
+using JoystickRemoteConfig.Core.Data;
 using UnityEngine;
 
-namespace JoystickRemote.Core
+namespace JoystickRemoteConfig.Core
 {
     public static class JoystickUtilities
     {

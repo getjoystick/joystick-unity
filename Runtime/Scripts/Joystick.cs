@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace JoystickRemote
+namespace JoystickRemoteConfig
 {
     [PublicAPI]
     public class Joystick

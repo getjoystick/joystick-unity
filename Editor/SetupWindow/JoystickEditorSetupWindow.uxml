@@ -40,6 +40,7 @@
                 </ui:Label>
                 <ui:Label name="RequestConfigContent" class="unselectedContent">
                     <ui:GroupBox>
+                        <ui:GroupBox name="GlobalExtendedRequestDataView" />
                         <ui:Label text="Auto Start RequestConfig Setup Configuration:" display-tooltip-when-elided="true" name="LabelResuestConfigSetup" style="height: 21px;" />
                         <ui:Toggle label="Request Data at Start:" name="ToggleRequestDataAtStart" style="height: auto; margin-top: 1px; margin-bottom: 6px;" />
                         <ui:GroupBox name="RequestContentAtStartView" style="height: 56px; width: auto;">

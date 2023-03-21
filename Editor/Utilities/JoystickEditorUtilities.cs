@@ -1,10 +1,10 @@
 using System.IO;
 using System.Linq;
-using JoystickRemote.Core.Data;
+using JoystickRemoteConfig.Core.Data;
 using UnityEditor;
 using UnityEngine;
 
-namespace JoystickRemote
+namespace JoystickRemoteConfig
 {
     public static class JoystickEditorUtilities
     {

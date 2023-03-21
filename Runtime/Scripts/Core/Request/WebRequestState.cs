@@ -1,4 +1,4 @@
-﻿namespace JoystickRemote.Core.Web
+﻿namespace JoystickRemoteConfig.Core.Web
 {
     public enum WebRequestState : byte
     {

@@ -1,4 +1,4 @@
-namespace JoystickRemote.Core.Data
+namespace JoystickRemoteConfig.Core.Data
 {
    public enum EnvironmentType
    {

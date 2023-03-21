@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using JoystickRemote.Core;
-using JoystickRemote.Core.API;
-using JoystickRemote.Core.Data;
-using JoystickRemote.Core.Web;
+using JoystickRemoteConfig.Core;
+using JoystickRemoteConfig.Core.API;
+using JoystickRemoteConfig.Core.Data;
+using JoystickRemoteConfig.Core.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace JoystickRemote
+namespace JoystickRemoteConfig
 {
     public sealed class JoystickService
     {

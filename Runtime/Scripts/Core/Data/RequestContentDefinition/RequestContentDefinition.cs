@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JoystickRemote
+namespace JoystickRemoteConfig
 {
     [CreateAssetMenu(fileName = "RequestContentDefinition", menuName = "Joystick/RequestContentDefinition")]
     public class RequestContentDefinition : ScriptableObject

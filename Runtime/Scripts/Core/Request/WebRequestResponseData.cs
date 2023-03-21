@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine.Networking;
 
-namespace JoystickRemote.Core.Web
+namespace JoystickRemoteConfig.Core.Web
 {
     [PublicAPI]
     public class WebRequestResponseData

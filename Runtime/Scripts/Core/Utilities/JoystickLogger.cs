@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JoystickRemote.Core
+namespace JoystickRemoteConfig.Core
 {
     public class JoystickLogger
     {

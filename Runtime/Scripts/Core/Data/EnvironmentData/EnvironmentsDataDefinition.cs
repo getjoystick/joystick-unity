@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JoystickRemote.Core.Data
+namespace JoystickRemoteConfig.Core.Data
 {
     public class EnvironmentsDataDefinition : ScriptableObject
     {

@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json.Linq;
 
-namespace JoystickRemote.Core.API
+namespace JoystickRemoteConfig.Core.API
 {
     [Serializable]
     public class APIRequestData
