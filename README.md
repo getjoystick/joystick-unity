@@ -54,7 +54,7 @@ Example Usage:
 Fetching Config Content using RequestContentDefinition
 
 ```C#
-using JoystickRemote;
+using JoystickRemoteConfig;
 using UnityEngine;
 
  
@@ -82,7 +82,7 @@ public class FetchContent : MonoBehaviour
 Fetching Config Content using List of ContentDefinitionData
 
 ```C#
-using JoystickRemote;
+using JoystickRemoteConfig;
 using UnityEngine;
 
 public class FetchContent : MonoBehaviour
@@ -109,7 +109,7 @@ public class FetchContent : MonoBehaviour
 
 Fetching Catalog Content
 ```C#
-using JoystickRemote;
+using JoystickRemoteConfig;
 using UnityEngine;
 
 public class FetchContent : MonoBehaviour
@@ -135,7 +135,7 @@ public class FetchContent : MonoBehaviour
  
 Set Runtime Environment API Key
 ```C#
-using JoystickRemote;
+using JoystickRemoteConfig;
 using UnityEngine;
 
 public class SetRuntimeEnvironmentAPIKey : MonoBehaviour
@@ -146,6 +146,86 @@ public class SetRuntimeEnvironmentAPIKey : MonoBehaviour
     }
 }
 ```
+ 
+Example of deserialize Json Data which contains hyphen
+```C#
+using System.Collections.Generic;
+using JoystickRemoteConfig;
+using Newtonsoft.Json;
+using UnityEngine;
+
+public class ConfigsData
+{
+    [JsonProperty("my-config-01")] 
+    public ConfigItem config01;
+    
+    [JsonProperty("my-config-02")] 
+    public ConfigItem config02;
+}
+
+public class ConfigItem 
+{
+    [JsonProperty("data")]
+    public YourData configData;
+    public Dictionary<string, object> meta;
+}
+
+[System.Serializable]
+public class YourData 
+{
+    [JsonProperty("some-numeric-data")]
+    public int someNumericData;
+
+    [JsonProperty("some-more-data")] 
+    public int someMoreData;
+}
+ 
+public class JoystickExample01 : MonoBehaviour
+{
+    private void Start()
+    {
+        string[] contentIds = { "my-config-01", "my-config-02" };
+
+        Joystick.FetchConfigContent(contentIds, (isSucceed, result) =>
+        {
+            if (isSucceed)
+            {
+                var deserializeConfigData = JsonConvert.DeserializeObject<ConfigsData>(result);
+                
+                var config01SomeNumericData = deserializeConfigData.config01.configData.someNumericData;
+                var config02SomeMoreData = deserializeConfigData.config02.configData.someMoreData;
+                
+                Debug.Log("config01SomeNumericData: " + config01SomeNumericData);
+                Debug.Log("config02SomeMoreData: " + config02SomeMoreData);
+            }
+        });
+    }
+}
+ 
+public class JoystickExample02 : MonoBehaviour
+{
+    [SerializeField] private RequestContentDefinition _contentDefinition;
+    
+    private void Start()
+    {
+        Joystick.FetchConfigContent(_contentDefinition, (isSucceed, result) =>
+        {
+            if (isSucceed)
+            {
+                var deserializeConfigData = JsonConvert.DeserializeObject<ConfigsData>(result);
+                
+                var config01SomeNumericData = deserializeConfigData.config01.configData.someNumericData;
+                var config02SomeMoreData = deserializeConfigData.config02.configData.someMoreData;
+                
+                Debug.Log("config01SomeNumericData: " + config01SomeNumericData);
+                Debug.Log("config02SomeMoreData: " + config02SomeMoreData);
+            }
+        });
+    }
+
+ 
+```
+ 
 
 Note: To use the Joystick Unity package, you need to have a Joystick account and have configured the remote content on the Joystick server. Also, make sure to check the "Request Data at Start" option in the Joystick editor window to trigger the OnAutoStartFetchContentCompleted event when the data fetching is complete.
  
@@ -195,6 +275,7 @@ All three FetchConfigContent methods are used to retrieve configuration data fro
  
  ![image](https://user-images.githubusercontent.com/11285378/224387587-b407462a-6a0b-4e66-91d4-c5bf2b22d0eb.png)
  ![image](https://user-images.githubusercontent.com/11285378/224387675-ed295da6-d92e-4c1e-8ca3-fbf96f98798b.png)
+
 
 
 
