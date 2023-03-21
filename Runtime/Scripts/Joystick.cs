@@ -20,8 +20,12 @@ namespace JoystickRemoteConfig
         /// </summary>
         public static string ResponseJsonData => JoystickService.Instance.ResponseJsonData;
 
-        public static ExtendedRequestData GlobalExtendedRequestData => JoystickService.Instance.GlobalExtendedRequestData;
-        
+        public static ExtendedRequestData GlobalExtendedRequestData
+        {
+            get => JoystickService.Instance.GlobalExtendedRequestData;
+            set => JoystickService.Instance.GlobalExtendedRequestData = value;
+        }
+
         /// <summary>
         /// Fetches remote config content from Joystick server passing RequestContentConfig
         /// </summary>
