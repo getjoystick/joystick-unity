@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------------
 
 using System.IO;
-using JoystickRemote;
+using JoystickRemoteConfig;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;
