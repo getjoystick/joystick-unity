@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace JoystickRemote
@@ -6,10 +5,10 @@ namespace JoystickRemote
     [CreateAssetMenu(fileName = "RequestContentDefinition", menuName = "Joystick/RequestContentDefinition")]
     public class RequestContentDefinition : ScriptableObject
     {
-        [SerializeField] private List<ContentRequestSettings>_contentDefinitionData;
+        [SerializeField] private string[] _contentIds;
         [SerializeField] private ExtendedRequestData _extendedRequestData;
 
-        public List<ContentRequestSettings> DefinitionData => _contentDefinitionData;
+        public string[] ContentIds => _contentIds;
 
         public ExtendedRequestData RequestData => _extendedRequestData;
     }

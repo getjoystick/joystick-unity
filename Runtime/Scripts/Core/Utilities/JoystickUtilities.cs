@@ -17,17 +17,17 @@ namespace JoystickRemote.Core
             return Resources.Load<JoystickGeneralDefinition>("JoystickGeneralDefinition");
         }
 
-        public static string GetConfigContentAPIUrl(List<ContentRequestSettings> configDataList)
+        public static string GetConfigContentAPIUrl(string[] contentIds)
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            for (int i = 0; i < configDataList.Count; i++)
+            for (int i = 0; i < contentIds.Length; i++)
             {
                 stringBuilder.Append("\"");
-                stringBuilder.Append(configDataList[i].contentId);
+                stringBuilder.Append(contentIds[i]);
                 stringBuilder.Append("\"");
 
-                if (i < configDataList.Count - 1)
+                if (i < contentIds.Length - 1)
                 {
                     stringBuilder.Append(",");
                 }

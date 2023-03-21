@@ -31,19 +31,19 @@ namespace JoystickRemote
         /// <param name="getFreshContent">A bool value to force updating the content when request</param>
         public static void FetchConfigContent(RequestContentDefinition definition, Action<bool, string> callback, bool getFreshContent = false)
         {
-            FetchConfigContent(definition.DefinitionData, callback, definition.RequestData, getFreshContent);
+            FetchConfigContent(definition.ContentIds, callback, definition.RequestData, getFreshContent);
         }
 
         /// <summary>
         /// Fetches remote config content from Joystick server passing a list of ContentConfigData and ExtendedRequestData
         /// </summary>
-        /// <param name="configList">A list data include multiple content name and content id</param>
+        /// <param name="contentIds">A array of string data include multiple content id</param>
         /// <param name="callback">A callback when request is done</param>
         /// <param name="overrideExtendedRequestData">A data to override existing ExtendedRequestData which contains uniqueUserId, version and an array of attributes</param>
         /// <param name="getFreshContent">A bool value to force updating the content when request</param>
-        public static void FetchConfigContent(List<ContentRequestSettings> configList, Action<bool, string> callback, ExtendedRequestData overrideExtendedRequestData = null, bool getFreshContent = false)
+        public static void FetchConfigContent(string[] contentIds, Action<bool, string> callback, ExtendedRequestData overrideExtendedRequestData = null, bool getFreshContent = false)
         {
-            JoystickService.Instance.FetchConfigContent(configList, callback, overrideExtendedRequestData, getFreshContent);
+            JoystickService.Instance.FetchConfigContent(contentIds, callback, overrideExtendedRequestData, getFreshContent);
         }
         
         /// <summary>
