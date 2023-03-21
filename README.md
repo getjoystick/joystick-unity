@@ -277,9 +277,6 @@ FetchConfigContent(RequestContentDefinition definition, Action<bool, string> cal
 ```C#
 FetchConfigContent(List<ContentDefinitionData> configList, Action<bool, string> callback, ExtendedRequestData extendedRequestData = null, bool getFreshContent = false)
  ```
-```C#
-FetchCatalogContent(Action<bool, string> callback, bool getFreshContent = false)
- ```
  
 All three FetchConfigContent methods are used to retrieve configuration data from a server. By default, the methods will attempt to retrieve the data from a cache if it exists, but you can set the getFreshContent parameter to true to force the methods to fetch the data from the server.
  
