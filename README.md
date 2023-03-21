@@ -60,10 +60,10 @@ using UnityEngine;
  
 public class FetchContent : MonoBehaviour
 {
-    public RequestContentConfig configDefinition;
+    public RequestContentDefinition requestContentDefinition;
     private void Start()
     {
-        Joystick.FetchConfigContent(configDefinition, OnContentFetchComplete);
+        Joystick.FetchConfigContent(requestContentDefinition, OnContentFetchComplete);
     }
 
     private void OnContentFetchComplete(bool success, string response)
