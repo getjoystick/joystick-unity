@@ -148,7 +148,7 @@ public class SetRuntimeEnvironmentAPIKey : MonoBehaviour
 ```
 ## Use Examples
  
-Example of deserialize Json Data which contains hyphen
+Here is an example of how to deserialize JSON data that includes hyphens.
 ```C#
 using System.Collections.Generic;
 using JoystickRemoteConfig;
@@ -223,10 +223,16 @@ public class JoystickExample02 : MonoBehaviour
             }
         });
     }
-
+}
  
 ```
  
+The following demonstrates how the remote configuration data is arranged on the Joystick dashboard.
+ 
+![image](https://user-images.githubusercontent.com/36725128/226665073-92f3d781-1bce-48e3-b435-051efa8d2db8.png)
+![image](https://user-images.githubusercontent.com/36725128/226665283-22d54507-c03e-4ab6-ad13-56c76251ba67.png)
+![image](https://user-images.githubusercontent.com/36725128/226665498-de12f67f-d5f1-4d33-8d10-eed29d44541b.png)
+
 
 Note: To use the Joystick Unity package, you need to have a Joystick account and have configured the remote content on the Joystick server. Also, make sure to check the "Request Data at Start" option in the Joystick editor window to trigger the OnAutoStartFetchContentCompleted event when the data fetching is complete.
  
