@@ -54,7 +54,7 @@ namespace JoystickRemoteConfig
  
                     using (var streamWriter = new StreamWriter( filePathAndName ) )
                     {
-                        streamWriter.WriteLine( "namespace JoystickRemote.Core.Data");
+                        streamWriter.WriteLine( "namespace JoystickRemoteConfig.Core.Data");
                         streamWriter.WriteLine( "{" );
                         streamWriter.WriteLine( "   public enum " + enumName );
                         streamWriter.WriteLine( "   {" );
