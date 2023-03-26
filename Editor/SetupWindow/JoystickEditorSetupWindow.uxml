@@ -15,7 +15,7 @@
                 <ui:Label name="GeneralContent" display-tooltip-when-elided="false" style="height: auto; width: auto;">
                     <ui:GroupBox>
                         <ui:Label text="General Setup Configuration:" display-tooltip-when-elided="true" name="LabelGeneralSetup" style="height: 21px;" />
-                        <ui:Toggle label="Serialized Response:" name="ToggleSerializedResponse" style="margin-bottom: 6px;" />
+                        <ui:Toggle label="Serialized Response:" name="ToggleSerializedResponse" tooltip="When true It will return serilzed data response" style="margin-bottom: 6px;" />
                         <ui:Toggle label="Enable Debug Mode:" name="ToggleDebugMode" style="margin-bottom: 6px;" />
                     </ui:GroupBox>
                     <ui:GroupBox name="InformationView" style="height: 112px; width: auto; max-height: none; flex-direction: column;">
@@ -31,17 +31,18 @@
                 <ui:Label name="EnvironmentsContent" class="unselectedContent">
                     <ui:GroupBox style="flex-direction: column; height: 414px;">
                         <ui:Label text="Enviroments Setup Configuration:" display-tooltip-when-elided="true" name="LabelEnviromentsSetup" style="height: 21px;" />
-                        <uie:EnumField label="Environment:" value="test" name="EnvironmentType" style="margin-bottom: 6px;" />
+                        <ui:DropdownField label="Environment:" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="DropdownEnvironmentType" />
                         <ui:ScrollView mode="Vertical" style="height: auto; width: auto;">
                             <ui:GroupBox name="EnvironmentSetup" />
                         </ui:ScrollView>
                         <ui:Button text="Update Environments Button" display-tooltip-when-elided="true" name="UpdateEnvironmentButton" style="margin-right: 3px; height: 50px; margin-top: 6px;" />
+                        <ui:VisualElement name="UpdateEnvironmentHelpBoxView" style="height: 65px;" />
                     </ui:GroupBox>
                 </ui:Label>
                 <ui:Label name="RequestConfigContent" class="unselectedContent">
                     <ui:GroupBox>
                         <ui:GroupBox name="GlobalExtendedRequestDataView" style="height: auto;" />
-                        <ui:VisualElement style="height: 4px; background-color: rgba(60, 60, 60, 255); margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
+                        <ui:VisualElement style="height: 4px; background-color: rgb(60, 60, 60); margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
                         <ui:Label text="Auto Start RequestConfig Setup Configuration:" display-tooltip-when-elided="true" name="LabelResuestConfigSetup" style="height: 21px;" />
                         <ui:Toggle label="Request Data at Start:" name="ToggleRequestDataAtStart" style="height: auto; margin-top: 1px; margin-bottom: 6px;" />
                         <ui:GroupBox name="RequestContentAtStartView" style="height: 56px; width: auto;">
