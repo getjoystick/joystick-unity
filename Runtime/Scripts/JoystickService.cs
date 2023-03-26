@@ -165,10 +165,8 @@ namespace JoystickRemoteConfig
                 throw new NullReferenceException("Please set environments data definition first! You can create it by opening Setup Window through Joystick menu.");
             }
 
-            int index = (int)environmentsDataDefinition.environmentType;
-
-            string name = environmentsDataDefinition.environments[index].Name;
-            string apiKey = environmentsDataDefinition.environments[index].APIKey;
+            string name = environmentsDataDefinition.selectedEnvironment.Name;
+            string apiKey = environmentsDataDefinition.selectedEnvironment.APIKey;
 
             JoystickLogger.Log($"Current Environment Name: {name} | API Key: {apiKey}");
             
