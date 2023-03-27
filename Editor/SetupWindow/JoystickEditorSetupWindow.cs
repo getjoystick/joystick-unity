@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using JoystickRemoteConfig.Core;
 using JoystickRemoteConfig.Core.Data;
@@ -5,6 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
+using Object = UnityEngine.Object;
 
 namespace JoystickRemoteConfig.Editor
 {
@@ -12,6 +14,10 @@ namespace JoystickRemoteConfig.Editor
     {
         private TabbedMenuController _tabbedMenuController;
         private JoystickGeneralDefinition _joystickGeneralDefinition;
+        
+        private GroupBox _environmentsSetupGroupBox;
+
+        private HelpBox _updateEnvironmentsHelpBox;
 
         [MenuItem("Joystick/Setup Window")]
         public static void ShowWindow()
@@ -38,6 +44,10 @@ namespace JoystickRemoteConfig.Editor
             _tabbedMenuController = new(root);
 
             _tabbedMenuController.RegisterTabCallbacks();
+            
+            _environmentsSetupGroupBox = rootVisualElement.Q<GroupBox>("EnvironmentSetup");
+            _updateEnvironmentsHelpBox = new HelpBox();
+            
             CreateEnvironmentConfigView();
             SetupRequestDataAtStartView();
             SetupGenericConfigView();
@@ -46,19 +56,9 @@ namespace JoystickRemoteConfig.Editor
 
         private void CreateEnvironmentConfigView()
         {
+            SetupDropdownMenuWithEnvironment();
+            
             var environmentsConfigDefinition = GetEnvironmentDefinition();
-            var environmentType = environmentsConfigDefinition.environmentType;
-
-            var environmentTypeField = rootVisualElement.Q<EnumField>("EnvironmentType");
-            environmentTypeField.value = environmentType;
-            environmentTypeField.Init(environmentType);
-            environmentTypeField.RegisterValueChangedCallback(evt =>
-            {
-                environmentsConfigDefinition.environmentType = (EnvironmentType)evt.newValue;
-                EditorUtility.SetDirty(environmentsConfigDefinition);
-            });
-
-            var environmentsSetupGroupBox = rootVisualElement.Q<GroupBox>("EnvironmentSetup");
 
             var serializedObject = new SerializedObject(environmentsConfigDefinition);
             var serializedProperty = serializedObject.GetIterator();
@@ -78,20 +78,70 @@ namespace JoystickRemoteConfig.Editor
                 };
 
                 propertyField.Bind(serializedObject);
-
-
-                environmentsSetupGroupBox.Add(propertyField);
+                _environmentsSetupGroupBox.Add(propertyField);
             }
 
             var updateEnvironmentButton = rootVisualElement.Q<Button>("UpdateEnvironmentButton");
 
             updateEnvironmentButton.clickable.clicked += () =>
             {
-                JoystickEditorUtilities.UpdateEnvironment(environmentsConfigDefinition.environments);
+                SetupDropdownMenuWithEnvironment();
                 EditorUtility.SetDirty(environmentsConfigDefinition);
             };
+            
+        }
+        
+        private void SetupDropdownMenuWithEnvironment()
+        {
+            var environmentsConfigDefinition = GetEnvironmentDefinition();
+            var environments = environmentsConfigDefinition.environments;
+            var environmentsDropdown = rootVisualElement.Q<DropdownField>("DropdownEnvironmentType");
+            
+            environmentsDropdown.value = environmentsConfigDefinition.selectedEnvironment.Name;
+            //check if environments names are unique
+            for (int i = 0; i < environments.Length; i++)
+            {
+                for (int j = 0; j < environments.Length; j++)
+                {
+                    if (i == j) continue;
+                    
+                    if (environments[i].Name == environments[j].Name)
+                    {
+                        ShowHelpBox(_updateEnvironmentsHelpBox, rootVisualElement.Q<VisualElement>("UpdateEnvironmentHelpBoxView"), "Environment names must be unique, check environment name: " + environments[i].Name + " for duplicates.", HelpBoxMessageType.Error);
+                        JoystickLogger.LogError("Environment names must be unique, check environment name: " + environments[i].Name + " for duplicates.");
+                        return;
+                    }
+                }
+            }
+            
+            _updateEnvironmentsHelpBox.RemoveFromHierarchy();
 
-            //environmentsSetupGroupBox.Add(updateEnvironmentButton);
+            environmentsDropdown.choices.Clear();
+            foreach (var environmentData in environments)
+            {
+                environmentsDropdown.choices.Add(environmentData.Name);
+            }
+
+            environmentsDropdown.RegisterValueChangedCallback(evt =>
+            {
+                foreach (var environmentData in environments)
+                {
+                    if (environmentData.Name != evt.newValue.ToString()) continue;
+                    
+                    environmentsConfigDefinition.selectedEnvironment = environmentData;
+                    break;
+                }
+                
+                EditorUtility.SetDirty(environmentsConfigDefinition);
+            });
+        }
+
+        private void ShowHelpBox(HelpBox helpBox, VisualElement visualElement, string text, HelpBoxMessageType helpBoxMessageType)
+        {
+            helpBox.messageType = helpBoxMessageType;
+            helpBox.text = text;
+
+            visualElement.Add(helpBox);
         }
 
         private void SetupRequestDataAtStartView()
@@ -132,6 +182,7 @@ namespace JoystickRemoteConfig.Editor
             propertyField.Add(targetObjectField);
             //RequestContentConfigInfo(targetObjectField.value);
         }
+        
 
         private void RequestContentGlobalExtendedRequestData(Object targetObjectField)
         {
