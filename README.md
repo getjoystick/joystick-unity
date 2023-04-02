@@ -309,9 +309,8 @@ All three FetchConfigContent methods are used to retrieve configuration data fro
  
  The "Request Config" tab includes the "Request Data at Start" option. When toggled on, your project will automatically fetch data at the start using the referenced Request Content Definition.
  
-![image](https://user-images.githubusercontent.com/36725128/229334456-4473c6c2-f08b-4dc9-9353-beb13f2cbb6d.png)
-![image](https://user-images.githubusercontent.com/36725128/229334461-9a9b7caf-70e0-4e52-a5ec-7250d1419fa9.png)
-
+![image](https://user-images.githubusercontent.com/36725128/229334767-9c90a37b-755b-4639-bc1a-49acf2fb4ff3.png)
+![image](https://user-images.githubusercontent.com/36725128/229334778-a7105b7f-874f-4bda-8cf3-eab958884ee2.png)
  
  The Request Content Definition is used to call Joystick's MultipleConfigs API, which includes multiple content IDs. The contentIds is an array that contains multiple string items. Extended data can be added to the request, including "Unique User ID", "Version", and an array of "Attributes". The "Attributes" array contains key-value pairs of data to be sent to the Joystick server.
  
