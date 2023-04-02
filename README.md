@@ -43,9 +43,10 @@ To use the Joystick Unity package, you need to follow the below steps:
 3. After importing the package, you can access the Joystick class by using the following namespace: JoystickRemote.
 4. The Joystick class contains the following static methods:
  * > FetchConfigContent(RequestContentDefinition definition, Action<bool, string> callback, bool getFreshContent = false)
- * > FetchConfigContent(List<ContentDefinitionData> configList, Action<bool, string> callback, ExtendedRequestData extendedRequestData = null, bool getFreshContent = false)
- * > FetchCatalogContent(Action<bool, string> callback, bool getFreshContent = false)
-5. To fetch content, call the FetchConfigContent method, passing in the RequestContentDefinition or List of ContentDefinitionData and the callback method. You can also set a boolean value to force updating the content when requesting.
+ * > FetchConfigContent(string[] contentIds, Action<bool, string> callback, ExtendedRequestData overrideExtendedRequestData = null, bool getFreshContent = false)
+ * > FetchCatalogContent(Action<bool, string> callback)
+ * > SetRuntimeEnvironmentAPIKey(string apiKey)
+5. To fetch content, call the FetchConfigContent method, passing in the RequestContentDefinition or a string array of contentIds and the callback method. You can also set a boolean value to force updating the content when requesting.
 6. To fetch the catalog content, call the FetchCatalogContent method, passing in the callback method. You can also set a boolean value to force updating the content when requesting.
 
 Example Usage:
@@ -53,16 +54,16 @@ Example Usage:
 Fetching Config Content using RequestContentDefinition
 
 ```C#
-using JoystickRemote;
+using JoystickRemoteConfig;
 using UnityEngine;
 
  
 public class FetchContent : MonoBehaviour
 {
-    public RequestContentConfig configDefinition;
+    public RequestContentDefinition requestContentDefinition;
     private void Start()
     {
-        Joystick.FetchConfigContent(configDefinition, OnContentFetchComplete);
+        Joystick.FetchConfigContent(requestContentDefinition, OnContentFetchComplete);
     }
 
     private void OnContentFetchComplete(bool success, string response)
@@ -78,18 +79,18 @@ public class FetchContent : MonoBehaviour
     }
 }
 ```
-Fetching Config Content using List of ContentDefinitionData
+Fetching Config Content using an string array of contentIds
 
 ```C#
-using JoystickRemote;
+using JoystickRemoteConfig;
 using UnityEngine;
 
 public class FetchContent : MonoBehaviour
 {
-    public List<ContentConfigData> configList;
+    public string[] contentIds;
     private void Start()
     {
-        Joystick.FetchConfigContent(configList, OnContentFetchComplete);
+        Joystick.FetchConfigContent(contentIds, OnContentFetchComplete);
     }
 
     private void OnContentFetchComplete(bool success, string response)
@@ -108,7 +109,7 @@ public class FetchContent : MonoBehaviour
 
 Fetching Catalog Content
 ```C#
-using JoystickRemote;
+using JoystickRemoteConfig;
 using UnityEngine;
 
 public class FetchContent : MonoBehaviour
@@ -132,11 +133,152 @@ public class FetchContent : MonoBehaviour
 }
 ```
  
+Set Runtime Environment API Key
+```C#
+using JoystickRemoteConfig;
+using UnityEngine;
+
+public class SetRuntimeEnvironmentAPIKey : MonoBehaviour
+{
+    private void Start()
+    {
+        Joystick.SetRuntimeEnvironmentAPIKey("{You API Key}");
+    }
+}
+```
+ 
+Set GloalExtendedRequestData in runtime
+```C#
+using JoystickRemoteConfig;
+using UnityEngine;
+
+public class SetGloalExtendedRequestDataInRuntime : MonoBehaviour
+{
+    private void Start()
+    {
+        Joystick.GlobalExtendedRequestData.SetUniqueUserId("{You Unique UserId}");
+        Joystick.GlobalExtendedRequestData.SetVersion("{Your Version}");
+        Joystick.GlobalExtendedRequestData.SetAttributes(new AttributesData[]
+        {
+            new()
+            {
+                key = "{Your Key}",
+                value = "{Your Value}"
+            },
+            new()
+            {
+                key = "{Your Key}",
+                value = "{Your Value}"
+            }
+        });
+    }
+}
+```
+ 
+ 
+## Use Examples
+ 
+Here is an example of how to deserialize JSON data that includes hyphens.
+```C#
+using System.Collections.Generic;
+using JoystickRemoteConfig;
+using Newtonsoft.Json;
+using UnityEngine;
+
+public class ConfigsData
+{
+    [JsonProperty("my-config-01")] 
+    public ConfigItem config01;
+    
+    [JsonProperty("my-config-02")] 
+    public ConfigItem config02;
+}
+
+public class ConfigItem 
+{
+    [JsonProperty("data")]
+    public YourData configData;
+    public Dictionary<string, object> meta;
+}
+
+[System.Serializable]
+public class YourData 
+{
+    [JsonProperty("some-numeric-data")]
+    public int someNumericData;
+
+    [JsonProperty("some-more-data")] 
+    public int someMoreData;
+}
+ 
+public class JoystickExample01 : MonoBehaviour
+{
+    private void Start()
+    {
+        string[] contentIds = { "my-config-01", "my-config-02" };
+
+        Joystick.FetchConfigContent(contentIds, (isSucceed, result) =>
+        {
+            if (isSucceed)
+            {
+                var deserializeConfigData = JsonConvert.DeserializeObject<ConfigsData>(result);
+                
+                var config01SomeNumericData = deserializeConfigData.config01.configData.someNumericData;
+                var config02SomeMoreData = deserializeConfigData.config02.configData.someMoreData;
+                
+                Debug.Log("config01SomeNumericData: " + config01SomeNumericData);
+                Debug.Log("config02SomeMoreData: " + config02SomeMoreData);
+            }
+        });
+    }
+}
+ 
+public class JoystickExample02 : MonoBehaviour
+{
+    [SerializeField] private RequestContentDefinition _contentDefinition;
+    
+    private void Start()
+    {
+        Joystick.FetchConfigContent(_contentDefinition, (isSucceed, result) =>
+        {
+            if (isSucceed)
+            {
+                var deserializeConfigData = JsonConvert.DeserializeObject<ConfigsData>(result);
+                
+                var config01SomeNumericData = deserializeConfigData.config01.configData.someNumericData;
+                var config02SomeMoreData = deserializeConfigData.config02.configData.someMoreData;
+                
+                Debug.Log("config01SomeNumericData: " + config01SomeNumericData);
+                Debug.Log("config02SomeMoreData: " + config02SomeMoreData);
+            }
+        });
+    }
+}
+ 
+```
+ 
+The following demonstrates how the remote configuration data is arranged on the Joystick dashboard.
+ 
+![image](https://user-images.githubusercontent.com/36725128/226665073-92f3d781-1bce-48e3-b435-051efa8d2db8.png)
+![image](https://user-images.githubusercontent.com/36725128/226665283-22d54507-c03e-4ab6-ad13-56c76251ba67.png)
+![image](https://user-images.githubusercontent.com/36725128/226665498-de12f67f-d5f1-4d33-8d10-eed29d44541b.png)
+
 
 Note: To use the Joystick Unity package, you need to have a Joystick account and have configured the remote content on the Joystick server. Also, make sure to check the "Request Data at Start" option in the Joystick editor window to trigger the OnAutoStartFetchContentCompleted event when the data fetching is complete.
  
  ## Caching Mechanism
- ToDo
+ 
+ Caching config data is a technique used to improve the performance of an application by reducing the number of requests made to a server to retrieve data that doesn't change frequently. By caching the data, subsequent requests for the same data can be served directly from the cache, which can significantly reduce the load on the server and improve the responsiveness of the application.
+ 
+ 
+```C#
+FetchConfigContent(RequestContentDefinition definition, Action<bool, string> callback, bool getFreshContent = false)
+ ```
+```C#
+FetchConfigContent(List<ContentDefinitionData> configList, Action<bool, string> callback, ExtendedRequestData extendedRequestData = null, bool getFreshContent = false)
+ ```
+ 
+All three FetchConfigContent methods are used to retrieve configuration data from a server. By default, the methods will attempt to retrieve the data from a cache if it exists, but you can set the getFreshContent parameter to true to force the methods to fetch the data from the server.
  
  
  ## Joystick Setup Window
@@ -156,17 +298,25 @@ Note: To use the Joystick Unity package, you need to have a Joystick account and
  ![image](https://user-images.githubusercontent.com/11285378/224384274-47e73062-5d03-47c9-954f-05fcf89dd835.png)
  ![image](https://user-images.githubusercontent.com/11285378/224384366-685010cc-9f55-44be-8769-85180f82bf00.png)
  
- ### Request Config
+ ### Request Settings
+ 
+  ## GlobalExtendedRequestData
+ 
+ ![image](https://user-images.githubusercontent.com/11285378/226671323-cb2f9587-ebb2-4728-b453-e60b8752cbc7.png)
+
+ 
+  ## Request Data At Application Start
  
  The "Request Config" tab includes the "Request Data at Start" option. When toggled on, your project will automatically fetch data at the start using the referenced Request Content Definition.
  
- ![image](https://user-images.githubusercontent.com/11285378/224384474-3a6cab12-a896-4586-bf17-d5921e3e4381.png)
- ![image](https://user-images.githubusercontent.com/11285378/224384716-2132eaf0-6c0f-4c9c-a544-2ff2b7a19848.png)
+![image](https://user-images.githubusercontent.com/36725128/229334767-9c90a37b-755b-4639-bc1a-49acf2fb4ff3.png)
+![image](https://user-images.githubusercontent.com/36725128/229334778-a7105b7f-874f-4bda-8cf3-eab958884ee2.png)
  
- The Request Content Definition is used to call Joystick's MultipleConfigs API, which includes multiple content names and IDs. The content config data is an array that contains multiple items. Extended data can be added to the request, including "Unique User ID", "Version", and an array of "Attributes". The "Attributes" array contains key-value pairs of data to be sent to the Joystick server.
+ The Request Content Definition is used to call Joystick's MultipleConfigs API, which includes multiple content IDs. The contentIds is an array that contains multiple string items. Extended data can be added to the request, including "Unique User ID", "Version", and an array of "Attributes". The "Attributes" array contains key-value pairs of data to be sent to the Joystick server.
  
- ![image](https://user-images.githubusercontent.com/11285378/224387587-b407462a-6a0b-4e66-91d4-c5bf2b22d0eb.png)
- ![image](https://user-images.githubusercontent.com/11285378/224387675-ed295da6-d92e-4c1e-8ca3-fbf96f98798b.png)
+![image](https://user-images.githubusercontent.com/36725128/229335094-bfa365a4-9e32-4867-abf4-9cf229ee5f81.png)
+![image](https://user-images.githubusercontent.com/36725128/229335018-039c40bf-1a09-451d-84b8-f35b839d9e9e.png)
+
 
 
 
