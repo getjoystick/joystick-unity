@@ -34,22 +34,24 @@ namespace JoystickRemoteConfig.Core
             return string.Empty;
         }
 
-        public static void ClearCache(string key = null)
+        public static bool HasCache(string key)
         {
-            if (key == null)
+            if (PlayerPrefs.HasKey(CacheDataKeyPrefix + key) && PlayerPrefs.HasKey(CacheDataExpirationKeyPrefix + key))
             {
-                // Clear all cached data
-                PlayerPrefs.DeleteAll();
-                PlayerPrefs.Save();
+                return !string.IsNullOrWhiteSpace(PlayerPrefs.GetString(CacheDataKeyPrefix + key)) &&
+                       PlayerPrefs.GetFloat(CacheDataExpirationKeyPrefix + key) > Time.time;
             }
-            else
+
+            return false;
+        }
+
+        public static void ClearCache(string key)
+        {
+            if (PlayerPrefs.HasKey(CacheDataKeyPrefix + key))
             {
-                if (PlayerPrefs.HasKey(key))
-                {
-                    PlayerPrefs.DeleteKey(CacheDataKeyPrefix + key);
-                    PlayerPrefs.DeleteKey(CacheDataExpirationKeyPrefix + key);
-                    PlayerPrefs.Save();
-                }
+                PlayerPrefs.DeleteKey(CacheDataKeyPrefix + key);
+                PlayerPrefs.DeleteKey(CacheDataExpirationKeyPrefix + key);
+                PlayerPrefs.Save();
             }
         }
     }
