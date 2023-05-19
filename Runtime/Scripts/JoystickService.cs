@@ -38,8 +38,6 @@ namespace JoystickRemoteConfig
         [RuntimeInitializeOnLoadMethod]
         private static void Initialize()
         {
-            CacheDataManager.ClearCache();
-
             Instance._runtimeEnvironmentAPIKey = string.Empty;
             
             Instance.GlobalExtendedRequestData = JoystickUtilities.GlobalExtendedRequestDefinition().GlobalExtendedRequestData;
@@ -118,11 +116,21 @@ namespace JoystickRemoteConfig
             }
             else
             {
-                JoystickLogger.LogError($"Request failed: {responseData.TextData} | Clear Cached Data");
-                
-                CacheDataManager.ClearCache(responseData.RequestUrl);
-                
-                callback?.Invoke(false, responseData.TextData);
+                JoystickLogger.LogError($"Request failed: code: {responseData.ResponseCode} | error message: {responseData.ErrorMessage}");
+
+                if (CacheDataManager.HasCache(responseData.RequestUrl))
+                {
+                    JoystickLogger.LogError($"Request failed will use cache data: {responseData.RequestUrl}");
+
+                    callback?.Invoke(true, CacheDataManager.GetCache(responseData.RequestUrl));
+                }
+                else
+                {
+                    JoystickLogger.LogError($"Request failed don't have cache data: {responseData.RequestUrl}");
+
+                    CacheDataManager.ClearCache(responseData.RequestUrl);
+                    callback?.Invoke(false, responseData.TextData);
+                }
             }
         }
 
