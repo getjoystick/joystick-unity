@@ -52,12 +52,12 @@ namespace JoystickRemoteConfig
             if (Instance._autoFetchContent)
             {
                 string[] contentIds = generalDefinition.RequestContentDefinitionAtStart.ContentIds;
-                ExtendedRequestData extendedRequestData = generalDefinition.RequestContentDefinitionAtStart.RequestData;
+                Instance.GlobalExtendedRequestData = generalDefinition.RequestContentDefinitionAtStart.RequestData;
                 Instance.FetchConfigContent(contentIds,
                     (isSucceed, responseJsonData) =>
                     {
                         Instance.OnAutoStartFetchContentCompleted?.Invoke(isSucceed, responseJsonData);
-                    }, extendedRequestData);
+                    }, Instance.GlobalExtendedRequestData);
             }
         }
 
@@ -65,9 +65,7 @@ namespace JoystickRemoteConfig
         {
             _getFreshContent = getFreshContent;
 
-            GlobalExtendedRequestData = overrideExtendedRequestData;
-            
-            (string url, string requestBody) = PrepareRequest(contentIds, GlobalExtendedRequestData);
+            (string url, string requestBody) = PrepareRequest(contentIds, overrideExtendedRequestData);
 
             var apiKey = string.IsNullOrWhiteSpace(_runtimeEnvironmentAPIKey) ? GetCurrentEnvironmentAPIKey() : _runtimeEnvironmentAPIKey;
             Dictionary<string, string> headers = new Dictionary<string, string> { { "x-api-key", apiKey } };
@@ -91,6 +89,13 @@ namespace JoystickRemoteConfig
         public void SetRuntimeEnvironmentAPIKey(string apiKey)
         {
             _runtimeEnvironmentAPIKey = apiKey;
+        }
+        
+        public void SetExtendedRequestData(ExtendedRequestData extendedRequestData)
+        {
+            GlobalExtendedRequestData = extendedRequestData ?? new ExtendedRequestData();
+
+            CacheDataManager.SetCache(nameof(ExtendedRequestData), JsonConvert.SerializeObject(extendedRequestData));
         }
 
         private void HandleOnRequestDone(WebRequestResponseData responseData, Action<bool, string> callback)
@@ -134,30 +139,47 @@ namespace JoystickRemoteConfig
             }
         }
 
-        private (string, string) PrepareRequest(string[] contentIds, ExtendedRequestData extendedRequestData)
+        private (string, string) PrepareRequest(string[] contentIds, ExtendedRequestData overrideExtendedRequestData)
         {
             APIRequestData requestData;
 
-            extendedRequestData ??= new ExtendedRequestData();
+            if (overrideExtendedRequestData != null)
+            {
+                GlobalExtendedRequestData = overrideExtendedRequestData;
+                CacheDataManager.SetCache(nameof(ExtendedRequestData), JsonConvert.SerializeObject(overrideExtendedRequestData));
+            }
+            else
+            {
+                var cachedExtendedRequestData = CacheDataManager.GetCache(nameof(ExtendedRequestData));
+
+                if (!string.IsNullOrWhiteSpace(cachedExtendedRequestData))
+                {
+                    GlobalExtendedRequestData = JsonConvert.DeserializeObject<ExtendedRequestData>(cachedExtendedRequestData);
+                }
+                else
+                {
+                    GlobalExtendedRequestData ??= new ExtendedRequestData();
+                }
+            }
             
-            if (Regex.IsMatch(extendedRequestData.version, @"\d+\.\d+\.\d+"))
+            if (Regex.IsMatch(GlobalExtendedRequestData.version, @"\d+\.\d+\.\d+"))
             {
                 requestData = new APIRequestVersionData
                 {
-                    u = string.IsNullOrWhiteSpace(extendedRequestData.uniqueUserId) ? string.Empty : extendedRequestData.uniqueUserId,
-                    v = extendedRequestData.version
+                    u = string.IsNullOrWhiteSpace(GlobalExtendedRequestData.uniqueUserId) ? string.Empty : GlobalExtendedRequestData.uniqueUserId,
+                    v = GlobalExtendedRequestData.version
                 };
             }
             else
             {
                 requestData = new APIRequestData
                 {
-                    u = string.IsNullOrWhiteSpace(extendedRequestData.uniqueUserId) ? string.Empty : extendedRequestData.uniqueUserId,
+                    u = string.IsNullOrWhiteSpace(GlobalExtendedRequestData.uniqueUserId) ? string.Empty : GlobalExtendedRequestData.uniqueUserId,
                 };
             }
             
-            requestData.p = GetAttributesJObject(extendedRequestData.attributes);
-
+            requestData.p = GetAttributesJObject(GlobalExtendedRequestData.attributes);
+            
             var url = JoystickUtilities.GetConfigContentAPIUrl(contentIds);
             var requestBody = JsonConvert.SerializeObject(requestData);
             
