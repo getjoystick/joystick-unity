@@ -63,5 +63,14 @@ namespace JoystickRemoteConfig
         {
             JoystickService.Instance.SetRuntimeEnvironmentAPIKey(apiKey);
         }
+        
+        /// <summary>
+        /// Set up extended request data for Joystick
+        /// </summary>
+        /// <param name="extendedRequestData">An ExtendedRequestData contains uniqueUserId, version and an array of attributes</param>
+        public static void SetExtendedRequestData(ExtendedRequestData extendedRequestData)
+        {
+            JoystickService.Instance.SetExtendedRequestData(extendedRequestData);
+        }
     }
 }
