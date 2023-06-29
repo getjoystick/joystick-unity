@@ -1,5 +1,8 @@
 # Change Log:
 
+## 1.0.2
+- Update extended data logic.
+
 ## 1.0.1
 - Update cache logic.
 
